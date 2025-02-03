@@ -2,60 +2,53 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
-        'fullname',
-        'username',
-        'no_hp',
+        'name',
+        'email',
         'password',
-        'role_id',
+        'role',
+        'division_id'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    public function bookings()
+    protected function casts(): array
     {
-        return $this->hasMany(Booking::class, 'id_user');
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
     }
 
-    public function role()
+    public function division()
     {
-        return $this->belongsTo(Role::class, 'role_id');
+        return $this->belongsTo(Division::class);
     }
 
-    public function vehicles()
+    public function isAdmin()
     {
-        return $this->hasMany(Vehicle::class, 'id_user');
+        return $this->role === 'admin';
+    }
+
+    public function isApprover()
+    {
+        return $this->role === 'approver1' || $this->role === 'approver2';
+    }
+
+    public function isUser()
+    {
+        return $this->role === 'user';
     }
 }

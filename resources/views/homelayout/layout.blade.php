@@ -41,35 +41,18 @@
 </head>
 
 <body>
-    {{-- Header --}}
-    @include('homelayout.header')
 
     <div class="container-fluid">
         <div class="row">
-            {{-- Sidebar --}}
-            @include('homelayout.sidebar')
 
-            {{-- Content --}}
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                @yield('content')
             </main>
         </div>
     </div>
 
-    {{-- Modal --}}
-    @include('homepage_view.modal')
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-
-    <!-- DataTables JS -->
-    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-
-    {{-- Sidebars js --}}
-    <script src="{{ asset('js/sidebars.js') }}"></script>
-
-    {{-- Style.js --}}
-    <script src="{{ asset('js/style.js') }}"></script>
 
     {{-- Sweet Alert --}}
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
